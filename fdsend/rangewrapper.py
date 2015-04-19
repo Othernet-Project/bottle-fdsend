@@ -58,7 +58,7 @@ def force_seek(fd, offset, chunk=CHUNK):
         emulate_seek(fd, offset, chunk)
 
 
-def range_iter(fd, offset, limit, chunk=CHUNK):
+def range_iter(fd, offset, length, chunk=CHUNK):
     """ Iterator generator that iterates over chunks in specified range
 
     This generator is meant to be used when returning file descriptor as a
@@ -74,11 +74,11 @@ def range_iter(fd, offset, limit, chunk=CHUNK):
     The file descriptor is automatically closed when iteration is finished.
     """
     force_seek(fd, offset, chunk)
-    while limit > 0:
+    while length > 0:
         ret = fd.read(chunk)
         if not ret:
             return
-        limit -= chunk
+        length -= chunk
         yield ret
     fd.close()
 
