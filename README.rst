@@ -10,7 +10,11 @@ unpacked from compressed archives into memory.
 Installation
 ============
 
-TODO
+To install bottle-fdsend, you can use pip or easy_install commands::
+
+    pip install bottle-fdsend
+
+    easy_install bottle-fdsend
 
 Basic usage
 ===========
