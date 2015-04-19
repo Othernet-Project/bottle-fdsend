@@ -3,3 +3,5 @@
 /.ropeproject
 /dist
 /*.egg-info
+/.tox
+/MANIFEST
