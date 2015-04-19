@@ -33,7 +33,7 @@ def format_ts(seconds=None):
     return time.strftime(TIMESTAMP_FMT, time.gmtime(seconds))
 
 
-def send_file(fd, filename, size=None, timestamp=None, ctype=None,
+def send_file(fd, filename=None, size=None, timestamp=None, ctype=None,
               charset=CHARSET, attachment=False, wrapper=DEFAULT_WRAPPER):
     """ Send a file represented by file object
 
@@ -50,9 +50,6 @@ def send_file(fd, filename, size=None, timestamp=None, ctype=None,
     The ``filename`` argument is an arbitrary filename. It is used to guess the
     content type, and also to set the content disposition in case of
     attachments.
-
-    The other arguments are optional, and the set of headers that are sent to
-    the requester is highly dependent on how many of them are passed.
 
     The ``size`` argument is the payload size in bytes. If it is omitted, the
     content length header is not set, and byte serving does not work.
@@ -110,7 +107,7 @@ def send_file(fd, filename, size=None, timestamp=None, ctype=None,
     headers = {}
     status = 200
 
-    if not ctype:
+    if not ctype and filename is not None:
         ctype, enc = mimetypes.guess_type(filename)
         if enc:
             headers['Content-Encoding'] = enc
@@ -136,6 +133,9 @@ def send_file(fd, filename, size=None, timestamp=None, ctype=None,
         if modsince is not None and modsince >= timestamp:
             headers['Date'] = format_ts()
             return HTTPResponse(status=304, **headers)
+
+    if attachment and filename:
+        headers['Content-Disposition'] = 'attachment; filename="%s"' % filename
 
     if request.method == 'HEAD':
         # Request is a HEAD, so remove any fd body

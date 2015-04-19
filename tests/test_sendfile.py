@@ -53,6 +53,17 @@ def test_send_file_with_wrong_object():
 
 @mock.patch(MOD + '.request')
 @mock.patch(MOD + '.HTTPResponse')
+def test_send_file_no_optional_args(HTTPResponse, *ignored):
+    """
+    Given no optional arguments, no headers are generated.
+    """
+    fd = mock.Mock()
+    mod.send_file(fd)
+    HTTPResponse.assert_called_once_with(fd, status=200)
+
+
+@mock.patch(MOD + '.request')
+@mock.patch(MOD + '.HTTPResponse')
 def test_send_file_mime(HTTPResponse, *ignored):
     """
     Given a file descriptor and filename, mime type is automatically guessed
@@ -120,6 +131,33 @@ def test_no_content_type(HTTPResponse, *ignored):
     """
     fd = mock.Mock()
     mod.send_file(fd, 'foo')
+    HTTPResponse.assert_called_once_with(fd, status=200)
+
+
+@mock.patch(MOD + '.request')
+@mock.patch(MOD + '.HTTPResponse')
+def test_send_file_attachment(HTTPResponse, *ignored):
+    """
+    Given both filename and attachment flag, Content-Disposition header is set.
+    """
+    fd = mock.Mock()
+    mod.send_file(fd, 'foo.pdf', attachment=True)
+    expected_headers = {
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': 'attachment; filename="foo.pdf"'
+    }
+    HTTPResponse.assert_called_once_with(fd, status=200, **expected_headers)
+
+
+@mock.patch(MOD + '.request')
+@mock.patch(MOD + '.HTTPResponse')
+def test_send_file_attachment_no_filename(HTTPResponse, *ignored):
+    """
+    Given attachment flag and no filename, Content-Disposition header is not
+    set.
+    """
+    fd = mock.Mock()
+    mod.send_file(fd, attachment=True)
     HTTPResponse.assert_called_once_with(fd, status=200)
 
 
