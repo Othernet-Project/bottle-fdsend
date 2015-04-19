@@ -195,11 +195,11 @@ to be used.
 The default wrapper is ``fdsend.rangewrapper.range_iter``.
 
 It is also possible to write your own wrapper. The wrapper must be a callable
-(function, class, etc) and must accept the following arguments:
+(function, class, etc) and must accept the following positional arguments:
 
-- file handle (positional argument)
-- offset (keyword argument, in bytes from the start of the file)
-- length (keyword argument, size of the range in bytes)
+- file handle
+- offset (in bytes from the start of the file)
+- length (size of the range in bytes)
 
 The return value must be a valid WSGI response body (string, iterable,
 file-like object).
