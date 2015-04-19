@@ -302,6 +302,6 @@ def test_range_wrapper(HTTPResponse, request, parse_range_header):
         'Content-Length': '280',
         'Content-Range': 'bytes 20-299/400',
     }
-    wrapper.assert_called_once_with(fd, offset=20, length=280)
+    wrapper.assert_called_once_with(fd, 20, 280)
     HTTPResponse.assert_called_once_with(
         wrapper.return_value, status=206, **expected_headers)

@@ -150,7 +150,7 @@ def send_file(fd, filename=None, size=None, timestamp=None, ctype=None,
         headers['Content-Range'] = 'bytes %d-%d/%d' % (start, end - 1, size)
         length = end - start
         headers['Content-Length'] = str(length)
-        fd = wrapper(fd, offset=start, length=length)
+        fd = wrapper(fd, start, length)
         status = 206
 
     return HTTPResponse(fd, status=status, **headers)
