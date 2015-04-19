@@ -14,12 +14,12 @@ import mimetypes
 from bottle import (HTTPResponse, HTTPError, parse_date, parse_range_header,
                     request)
 
-from .rangewrapper import RangeWrapper
+from .rangewrapper import range_iter
 
 
 CHARSET = 'UTF-8'
 TIMESTAMP_FMT = '%a, %d %b %Y %H:%M:%S GMT'
-DEFAULT_WRAPPER = RangeWrapper
+DEFAULT_WRAPPER = range_iter
 
 
 def format_ts(seconds=None):
