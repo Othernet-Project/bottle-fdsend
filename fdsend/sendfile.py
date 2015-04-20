@@ -128,7 +128,6 @@ def send_file(fd, filename=None, size=None, timestamp=None, ctype=None,
 
         # Check if If-Modified-Since header is in request and respond early
         modsince = request.environ.get('HTTP_IF_MODIFIED_SINCE')
-        print(modsince)
         modsince = modsince and parse_date(modsince.split(';')[0].strip())
         if modsince is not None and modsince >= timestamp:
             headers['Date'] = format_ts()
