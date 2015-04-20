@@ -51,7 +51,7 @@ class PyTest(TestCommand):
 
 setup(
     name='bottle-fdsend',
-    version='0.1',
+    version='0.1.1',
     author='Outernet Inc',
     author_email='branko@outernet.is',
     description='Library for constructing responses from file descriptors',
