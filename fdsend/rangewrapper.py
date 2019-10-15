@@ -87,7 +87,7 @@ class RangeWrapper(object):
     """ Wrapper around file-like object to provide reading within range
 
     This class is specifically crafted to take advantage of
-    ``wsgi.file_wrapper`` feature which is available in some WSGI wervers. The
+    ``wsgi.file_wrapper`` feature which is available in some WSGI servers. The
     class mimics the file objects and internally adjusts the reads for a
     specified range.
     """
